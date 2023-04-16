@@ -1,4 +1,4 @@
-import numpy
+import numpy, math
 from matplotlib import pyplot as plt
 
 def PolyCoefficients(x, coeffs):
@@ -32,6 +32,22 @@ def produto_f(function, a1, x, f_x):
         soma += function(x[i], a1) * f_x[i]
     return soma
 
+def media_vetor(vetor):
+    soma = 0
+
+    for i in range(len(vetor)):
+        soma += vetor[i]
+    
+    return soma / len(vetor)
+
+def desv_pad(vetor, media):
+    soma = 0
+
+    for i in range(len(vetor)):
+        soma += (vetor[i] - media) ** 2
+
+    return math.sqrt(soma / (len(vetor) - 1))
+
 x = [float(i) for i in range(1,101)]
 
 f_x = [5.0, 4.965, 4.496, 4.491, 4.566, 4.585, 4.724, 4.951, 4.917, 4.888, 5.087, 5.082, 5.039, 5.054, 4.94, 4.913, 4.871, 4.901, 4.864, 4.75,
@@ -39,6 +55,13 @@ f_x = [5.0, 4.965, 4.496, 4.491, 4.566, 4.585, 4.724, 4.951, 4.917, 4.888, 5.087
        6.066, 6.102, 6.204, 6.138, 5.938, 5.781, 5.813, 5.811, 5.818, 5.982, 6.132, 6.111, 5.948, 6.056, 6.342, 6.626, 6.591, 6.302, 6.132, 5.837,
        5.572, 5.744, 6.005, 6.239, 6.523, 6.652, 6.585, 6.622, 6.754, 6.712, 6.675, 6.882, 7.011, 7.14, 7.197, 7.411, 7.233, 6.958, 6.96, 6.927,
        6.814, 6.757, 6.765, 6.87, 6.954, 6.551, 6.022, 5.974, 6.052, 6.033, 6.03, 5.944, 5.543, 5.416, 5.571, 5.571, 5.627, 5.679, 5.455, 5.443]
+
+# Fazendo a centralização e o scaling das variáveis
+media = media_vetor(x)
+desvio = desv_pad(x, media)
+
+for i in range(len(x)):
+    x[i] = ((x[i] - media) / desvio)
 
 def adjust(grau):
     plt.ion()
@@ -67,11 +90,11 @@ def adjust(grau):
     for i in range(len(sol)):
         lista.append(float(sol[i]))
 
-    print("Coeficients:", sol)
-    print("Condition number:", numpy.linalg.cond(a))
+    print("Polinômio:", sol)
+    print("Condicionamento:", numpy.linalg.cond(a))
 
     # Plotting the graph
-    x_array = numpy.linspace(1, 100, 100)
+    x_array = numpy.linspace(x[0], x[len(x) - 1], 100)
     plt.plot(x_array, PolyCoefficients(x_array, lista))
     plt.scatter(x_array, f_x, s = 10, color = 'red')
     plt.title(f"Degree: {grau}")
