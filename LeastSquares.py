@@ -79,6 +79,10 @@ def adjust(grau):
     plt.pause(1)
     grau += 1
 
-grau = 17
-for i in range(grau + 1):
+    global grau_final
+    if grau_final == grau:
+        plt.savefig("Adjust")
+
+grau_final = 17
+for i in range(grau_final + 1):
     adjust(i)
