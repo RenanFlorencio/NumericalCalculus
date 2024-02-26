@@ -13,6 +13,8 @@ scaling the variable. The program also shows the conditioning of the linear syst
   <img src="https://user-images.githubusercontent.com/122649765/232259617-783308b4-e457-458a-9784-6496ebcbf88b.png">
 </p>
 
+The method of using dot products and matrices to solve the least squares comes from the book <b>Cálculo Numérico: Aspectos Teóricos e Computacionais de Márcia A. Gomes Ruggiero e Vera Lúcia da Rocha Lopes</b> (page 273 on the 2nd edition).
+
 ## Non-linear Newton
 On **NonLinear_Newton** is an implementation of Newton's Method for non-linear functions.
 
